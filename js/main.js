@@ -75,14 +75,14 @@ function deepCopy(points) {
 
 function drawLineGroup(group) {
     group.history.forEach(function(h) {
+        ctx.beginPath();
         h.forEach(function(pt) {
             ctx.strokeStyle = group.color;
-            ctx.beginPath();
             ctx.moveTo(pt.x, pt.y);
             ctx.lineTo(pt.next.x, pt.next.y);
             ctx.lineWidth = '1';
-            ctx.stroke();
         });
+        ctx.stroke();
     });
 }
 
@@ -102,8 +102,8 @@ function tic() {
     state.groups.forEach(function(group) {
         var newPoints = deepCopy(group.points);
         newPoints.forEach(function(pt) {
-            pt.x += pt.dx * 10.0;
-            pt.y += pt.dy * 10.0;
+            pt.x += Math.floor(pt.dx * 10.0);
+            pt.y += Math.floor(pt.dy * 10.0);
             if (pt.x > window.innerWidth) {
                 pt.dx = -pt.dx;
                 pt.x = window.innerWidth;
